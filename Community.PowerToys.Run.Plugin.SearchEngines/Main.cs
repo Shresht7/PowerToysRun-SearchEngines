@@ -32,12 +32,20 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// </summary>
         private string? IconPath { get; set; }
 
+        /// <summary>
+        /// Update the IconPath based on the current theme of the application.
+        /// </summary>
+        /// <param name="theme">The current theme of the application</param>
         private void UpdateIconPath(Theme theme)
         {
             IconPath = theme switch
             {
                 Theme.Light => "Images\\icon.light.png",
+                Theme.HighContrastWhite => "Images\\icon.light.png",
                 Theme.Dark => "Images\\icon.dark.png",
+                Theme.HighContrastBlack => "Images\\icon.dark.png",
+                Theme.HighContrastOne => "Images\\icon.dark.png",
+                Theme.HighContrastTwo => "Images\\icon.dark.png",
                 _ => "Images\\icon.dark.png",
             };
         }
