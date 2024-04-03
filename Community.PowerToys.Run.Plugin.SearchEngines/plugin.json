@@ -1,13 +1,13 @@
 {
     "ID": "FF7C33A486FC4C619AE002CECA7571F8",
-    "Disabled": false,
+    "Name": "Search Engines",
     "ActionKeyword": "??",
     "IsGlobal": false,
-    "Name": "Search Engines",
+    "Disabled": false,
     "Author": "Shresht7",
     "Version": "1.0.0",
-    "Language": "csharp",
     "Website": "https://github.com/Shresht7/PowerToysRun-SearchEngines",
+    "Language": "csharp",
     "ExecuteFileName": "Community.PowerToys.Run.Plugin.SearchEngines.dll",
     "IcoPathDark": "Images\\icon.dark.png",
     "IcoPathLight": "Images\\icon.light.png"
