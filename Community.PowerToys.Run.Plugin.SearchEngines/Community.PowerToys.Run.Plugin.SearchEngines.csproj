@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>$(Platform)</PlatformTarget>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="PowerToys.Common.UI">
+      <HintPath>..\Library\PowerToys.Common.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerToys.ManagedCommon">
+      <HintPath>..\Library\PowerToys.ManagedCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerToys.Settings.UI.Lib">
+      <HintPath>..\Library\PowerToys.Settings.UI.Lib.dll</HintPath>
+    </Reference>
+    <Reference Include="Wox.Infrastructure">
+      <HintPath>..\Library\Wox.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Wox.Plugin">
+      <HintPath>..\Library\Wox.Plugin.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Images\*.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
