@@ -1,4 +1,5 @@
 ﻿// Library
+using ManagedCommon;
 using Wox.Plugin;
 
 namespace Community.PowerToys.Run.Plugin.SearchEngines
@@ -26,6 +27,21 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// </summary>
         public string Description => "Perform a search using various search engines";
 
+        /// <summary>
+        /// Path to the Icon for the Plugin
+        /// </summary>
+        private string? IconPath { get; set; }
+
+        private void UpdateIconPath(Theme theme)
+        {
+            IconPath = theme switch
+            {
+                Theme.Light => "Images\\icon.light.png",
+                Theme.Dark => "Images\\icon.dark.png",
+                _ => "Images\\icon.dark.png",
+            };
+        }
+
         #endregion
 
         /// <summary>
@@ -41,7 +57,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 {
                     Title = "Hello World!",
                     SubTitle = "Says hello world!",
-                    IcoPath = "Images\\icon.png",
+                    IcoPath = IconPath,
                     Action = e =>
                     {
                         Context?.API.ShowNotification("Hello World!");
@@ -64,6 +80,19 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         {
             // Save the plugin initialization context for the future
             Context = context ?? throw new ArgumentNullException(nameof(context));
+            // Subscribe to the OnThemeChanged event
+            context.API.ThemeChanged += OnThemeChanged;
+            // Update the icon path based on the current theme
+            UpdateIconPath(context.API.GetCurrentTheme());
+        }
+
+        /// <summary>
+        /// OnThemeChanged event handler. Called when the theme is changed.
+        /// </summary>
+        /// <param name="theme">The new theme</param>
+        private void OnThemeChanged(Theme oldTheme, Theme newTheme)
+        {
+            UpdateIconPath(newTheme);
         }
 
     }

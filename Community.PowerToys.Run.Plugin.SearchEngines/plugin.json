@@ -9,6 +9,6 @@
     "Language": "csharp",
     "Website": "https://github.com/Shresht7/PowerToysRun-SearchEngines",
     "ExecuteFileName": "Community.PowerToys.Run.Plugin.SearchEngines.dll",
-    "IcoPathDark": "Images\\icon.png",
-    "IcoPathLight": "Images\\icon.png"
+    "IcoPathDark": "Images\\icon.dark.png",
+    "IcoPathLight": "Images\\icon.light.png"
 }
