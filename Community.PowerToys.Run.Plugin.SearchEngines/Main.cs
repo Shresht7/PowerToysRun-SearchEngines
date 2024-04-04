@@ -55,6 +55,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
 
         #endregion
 
+        #region Query
+
         /// <summary>
         /// The collection of Search Engines
         /// </summary>
@@ -88,6 +90,10 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 .ToList();
         }
 
+        #endregion
+
+        #region Plugin Lifecycle
+
         /// <summary>
         /// Plugin Initialization Context
         /// </summary>
@@ -115,6 +121,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         {
             UpdateIconPath(newTheme);
         }
+
+        #endregion
 
         #region Helper Methods
 
