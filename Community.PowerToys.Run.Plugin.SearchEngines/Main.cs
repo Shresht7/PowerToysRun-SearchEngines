@@ -1,6 +1,9 @@
 ﻿// Library
 using ManagedCommon;
+using Wox.Infrastructure;
 using Wox.Plugin;
+using Wox.Plugin.Logger;
+using BrowserInfo = Wox.Plugin.Common.DefaultBrowserInfo;
 
 namespace Community.PowerToys.Run.Plugin.SearchEngines
 {
@@ -53,26 +56,36 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         #endregion
 
         /// <summary>
+        /// The collection of Search Engines
+        /// </summary>
+        private readonly List<SearchEngine> SearchEngines =
+        [
+            new SearchEngine { Name = "Google", Url = "https://www.google.com/search?q=", Shortcut = "google" },
+            new SearchEngine { Name = "Bing", Url = "https://www.bing.com/search?q=", Shortcut = "bing" },
+        ];
+
+        /// <summary>
         /// Returns a filtered list of results based on the given query
         /// </summary>
         /// <param name="query">The input query provided by the user</param>
         /// <returns>A filtered list of results. Can be empty if nothing is found.</returns>
         public List<Result> Query(Query query)
         {
-            return
-            [
-                new Result
+            // Show a result for each search engine
+            return SearchEngines
+                .Select(engine => new Result
                 {
-                    Title = "Hello World!",
-                    SubTitle = "Says hello world!",
+                    Title = engine.Name,
+                    SubTitle = $"Search {engine.Name} for '{query.Search}'",
                     IcoPath = IconPath,
                     Action = e =>
                     {
-                        Context?.API.ShowNotification("Hello World!");
+                        // Open the search engine in the default browser
+                        OpenInBrowser(engine.Url + query.Search);
                         return true;
                     }
-                }
-            ];
+                })
+                .ToList();
         }
 
         /// <summary>
@@ -102,6 +115,25 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         {
             UpdateIconPath(newTheme);
         }
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Open the given URL in the default browser
+        /// </summary>
+        /// <param name="url">The URL to open</param>
+        /// <returns>Whether the operation was successful</returns>
+        private bool OpenInBrowser(string url)
+        {
+            if (!Helper.OpenCommandInShell(BrowserInfo.Path, BrowserInfo.ArgumentsPattern, url))
+            {
+                Log.Error($"Plugin: {Name}\nCannot open {BrowserInfo.Path} with arguments {BrowserInfo.ArgumentsPattern} {url}", typeof(SearchEngine));
+                return false;
+            }
+            return true;
+        }
+
+        #endregion
 
     }
 }
