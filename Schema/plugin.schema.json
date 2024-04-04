@@ -1,0 +1,69 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+        "ID": {
+            "type": "string",
+            "description": "The unique identifier for the plugin",
+            "pattern": "^[0-9a-fA-F]{32}$"
+        },
+        "Name": {
+            "type": "string",
+            "description": "Name of the plugin"
+        },
+        "ActionKeyword": {
+            "type": "string",
+            "description": "Action keyword for the plugin"
+        },
+        "IsGlobal": {
+            "type": "boolean",
+            "description": "Is the plugin available globally"
+        },
+        "Disabled": {
+            "type": "boolean",
+            "description": "Is the plugin disabled"
+        },
+        "Author": {
+            "type": "string",
+            "description": "Author of the plugin"
+        },
+        "Version": {
+            "type": "string",
+            "description": "Version of the plugin"
+        },
+        "Website": {
+            "type": "string",
+            "description": "Website of the plugin"
+        },
+        "Language": {
+            "type": "string",
+            "description": "Language used to develop the plugin"
+        },
+        "ExecuteFileName": {
+            "type": "string",
+            "description": "Name of the dll file"
+        },
+        "IcoPathDark": {
+            "type": "string",
+            "description": "Path to the dark icon"
+        },
+        "IcoPathLight": {
+            "type": "string",
+            "description": "Path to the light icon"
+        }
+    },
+    "required": [
+        "ID",
+        "Name",
+        "ActionKeyword",
+        "IsGlobal",
+        "Disabled",
+        "Author",
+        "Version",
+        "Website",
+        "Language",
+        "ExecuteFileName",
+        "IcoPathDark",
+        "IcoPathLight"
+    ]
+}
