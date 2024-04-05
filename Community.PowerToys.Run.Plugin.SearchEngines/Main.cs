@@ -80,8 +80,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             return SearchEngines
                 .Select(engine => new Result
                 {
-                    Title = engine.Name,
-                    SubTitle = $"Search {engine.Name} for '{query.Search}'",
+                    Title = query.Search,
+                    SubTitle = $"Search {engine.Name}",
                     IcoPath = IconPath,
                     Action = e =>
                     {
