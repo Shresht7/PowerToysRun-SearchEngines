@@ -1,4 +1,4 @@
-// Library
+﻿// Library
 using ManagedCommon;
 using Wox.Infrastructure;
 using Wox.Plugin;
@@ -80,7 +80,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             List<Result> results = [];
 
             // Encode the search query to be used in the URL
-            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(query.Search);
+            string searchQuery = query.Search; // We create a new variable so that we can modify it later to remove the search engine shortcut
+            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery);
 
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
@@ -91,9 +92,29 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     continue; // Skip this search engine if the URL is invalid
                 }
 
+                // string FirstSearch = query.FirstSearch;
+                // string SecondToEndSearch = query.SecondToEndSearch;
+                // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
+                string FirstSearch = query.Terms[0];
+                string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
+
+                // Determine if the query starts with a search engine
+                if (SearchEngine.Shortcut.Contains(FirstSearch, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Remove the search engine shortcut from the search query and encode it
+                    searchQuery = SecondToEndSearch;
+                    encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery);
+                }
+                else
+                {
+                    // Skip this search engine if the query does not start with the search engine shortcut
+                    continue;
+                }
+
+                // Generate Results for this Search Engine
                 results.Add(new Result
                 {
-                    Title = string.IsNullOrEmpty(query.Search) ? SearchEngine.Name : query.Search,
+                    Title = string.IsNullOrEmpty(query.Search) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
                     IcoPath = IconPath,
                     Action = e =>
