@@ -3,7 +3,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
     /// <summary>
     /// Class to represent a Search Engine
     /// </summary>
-    public class SearchEngine {
+    public class SearchEngine
+    {
 
         /// <summary>
         /// Display Name of the Search Engine
