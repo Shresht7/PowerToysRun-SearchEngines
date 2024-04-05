@@ -1,4 +1,4 @@
-﻿// Library
+// Library
 using ManagedCommon;
 using Wox.Infrastructure;
 using Wox.Plugin;
@@ -62,8 +62,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// </summary>
         private readonly List<SearchEngine> SearchEngines =
         [
-            new SearchEngine { Name = "Google", Url = "https://www.google.com/search?q=", Shortcut = "google" },
-            new SearchEngine { Name = "Bing", Url = "https://www.bing.com/search?q=", Shortcut = "bing" },
+            new SearchEngine { Name = "Google", Url = "https://www.google.com/search?q=%s", Shortcut = "google" },
+            new SearchEngine { Name = "Bing", Url = "https://www.bing.com/search?q=%s", Shortcut = "bing" },
         ];
 
         /// <summary>
