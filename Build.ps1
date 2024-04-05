@@ -16,7 +16,11 @@
 param(
     # The platform to build the project for. Must be one of: x64, ARM64
     [ValidateSet("x64", "ARM64")]
-    [string] $Platform = "x64"
+    [string] $Platform = "x64",
+
+    # The configuration to build the project for. Must be one of: Debug, Release
+    [ValidateSet("Debug", "Release")]
+    [string] $Configuration = "Release"
 )
 
 $ProjectName = "SearchEngines" # Project Name
@@ -32,7 +36,7 @@ if (Test-Path -Path "$PSScriptRoot\$ProjectFullName\bin") {
 }
 
 # Build the project
-dotnet build "$PSScriptRoot\$ProjectFullName.sln" -c Release /p:Platform=$Platform
+dotnet build "$PSScriptRoot\$ProjectFullName.sln" -c $Configuration /p:Platform=$Platform
 
 # Package the project
 Remove-Item -Path "$PSScriptRoot\$ProjectFullName\bin\*" -Recurse -Include *.xml, *.pdb, PowerToys.*, Wox.*
