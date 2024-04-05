@@ -47,14 +47,13 @@ dotnet build "$PSScriptRoot\$ProjectFullName.sln" -c $Configuration /p:Platform=
 
 # Prepare the build for packaging
 Remove-Item -Path "$ProjectBinFolder\*" -Recurse -Include *.xml, *.pdb, PowerToys.*, Wox.*
-Rename-Item -Path "$ProjectBinFolder\$Platform\Release" -NewName $ProjectName
 
 # Copy the build to the PowerToys Run Plugins directory
 Remove-Item -Path "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force -ErrorAction SilentlyContinue
-Copy-Item -Path "$ProjectBinFolder\$Platform\$ProjectName" -Destination "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force
+Copy-Item -Path "$ProjectBinFolder\$Platform\Release\net8.0-windows" -Destination "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force
 
 # Package the project
-Compress-Archive -Path "$ProjectBinFolder\$Platform\$ProjectName" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
+Compress-Archive -Path "$ProjectBinFolder\$Platform\Release\net8.0-windows" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
 
 # Restart PowerToys
 Start-Process -FilePath $PowerToysPath
