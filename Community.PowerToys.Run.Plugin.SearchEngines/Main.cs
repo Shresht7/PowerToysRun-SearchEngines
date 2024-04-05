@@ -103,8 +103,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                         }
 
                         // Open the search engine in the default browser
-                        OpenInBrowser(url);
-                        return true;
+                        return OpenInBrowser(url);
                     }
                 })
                 .ToList();
