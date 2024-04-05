@@ -1,4 +1,4 @@
-﻿// Library
+// Library
 using ManagedCommon;
 using Wox.Infrastructure;
 using Wox.Plugin;
@@ -88,7 +88,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                         // Ensure that engine.URL is not null
                         if (string.IsNullOrWhiteSpace(engine.Url))
                         {
-                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}", typeof(SearchEngine));
+                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}", GetType());
                             return false;
                         }
 
@@ -98,7 +98,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                         // Ensure that search URL is valid
                         if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
                         {
-                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}", typeof(SearchEngine));
+                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}", GetType());
                             return false;
                         }
 
@@ -154,7 +154,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         {
             if (!Helper.OpenCommandInShell(BrowserInfo.Path, BrowserInfo.ArgumentsPattern, url))
             {
-                Log.Error($"Plugin: {Name}\nCannot open {BrowserInfo.Path} with arguments {BrowserInfo.ArgumentsPattern} {url}", typeof(SearchEngine));
+                Log.Error($"Plugin: {Name}\nCannot open {BrowserInfo.Path} with arguments {BrowserInfo.ArgumentsPattern} {url}", GetType());
                 return false;
             }
             return true;

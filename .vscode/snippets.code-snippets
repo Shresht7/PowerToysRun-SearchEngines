@@ -1,0 +1,50 @@
+{
+	"Log Information Message": {
+		"scope": "csharp",
+		"prefix": "info",
+		"body": [
+			"Log.Info(\"$1\", GetType());",
+			"$0"
+		],
+	},
+	"Log Error Message": {
+		"scope": "csharp",
+		"prefix": "error",
+		"body": [
+			"Log.Error(\"$1\", GetType());",
+			"$0"
+		],
+	},
+	"Log Debug Message": {
+		"scope": "csharp",
+		"prefix": "debug",
+		"body": [
+			"Log.Debug(\"$1\", GetType());",
+			"$0"
+		],
+	},
+	"Log Warning Message": {
+		"scope": "csharp",
+		"prefix": "warning",
+		"body": [
+			"Log.Warning(\"$1\", GetType());",
+			"$0"
+		],
+	},
+	"Log Exceptional Message": {
+		"scope": "csharp",
+		"prefix": "exception",
+		"body": [
+			"Log.Exception(\"$1\", GetType());",
+			"$0"
+		],
+	},
+	"Show Message": {
+		"scope": "csharp",
+		"prefix": "message",
+		"body": [
+			"Context?.API.ShowMsg(\"$1\", \"$2\");",
+			"$0"
+		],
+	},
+}
