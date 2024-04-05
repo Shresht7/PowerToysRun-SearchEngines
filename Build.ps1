@@ -22,6 +22,6 @@ foreach ($Platform in $Platforms) {
     # Package the project
     Remove-Item -Path "$PSScriptRoot\$ProjectFullName\bin\*" -Recurse -Include *.xml, *.pdb, PowerToys.*, Wox.*
     Rename-Item -Path "$PSScriptRoot\$ProjectFullName\bin\$Platform\Release" -NewName $ProjectName    
-    Compress-Archive -Path "$PSScriptRoot\$ProjectFullName\bin\$Platform\$ProjectName" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip"
+    Compress-Archive -Path "$PSScriptRoot\$ProjectFullName\bin\$Platform\$ProjectName" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
 
 }
