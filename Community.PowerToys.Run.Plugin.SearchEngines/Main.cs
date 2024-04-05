@@ -60,14 +60,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <summary>
         /// The collection of Search Engines
         /// </summary>
-        private readonly List<SearchEngine> SearchEngines =
-        [
-            new SearchEngine { Name = "Google", Url = "https://www.google.com/search?q=%s", Shortcut = "google" },
-            new SearchEngine { Name = "Bing", Url = "https://www.bing.com/search?q=%s", Shortcut = "bing" },
-            new SearchEngine { Name = "GitHub", Url = "https://github.com/search?q=%s&ref=opensearch", Shortcut = "github" },
-            new SearchEngine { Name = "Mozilla Developer Network", Url = "https://developer.mozilla.org/en-US/search?q=%s", Shortcut = "mdn" },
-            new SearchEngine { Name = "GitHub Docs", Url = "https://docs.github.com/en/search?query=%s", Shortcut = "ghdocs" },
-        ];
+        private readonly List<SearchEngine> SearchEngines = SearchEngineCollection.SearchEngines;
 
         /// <summary>
         /// Returns a filtered list of results based on the given query
