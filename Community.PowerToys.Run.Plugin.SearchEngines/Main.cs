@@ -93,7 +93,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     Action = e =>
                     {
                         // Ensure that engine.URL is not null
-                        if (string.IsNullOrWhiteSpace(SearchEngine.Url))
+                        if (string.IsNullOrEmpty(SearchEngine.Url))
                         {
                             Log.Error($"Plugin: {Name}\nInvalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}", GetType());
                             Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}");
