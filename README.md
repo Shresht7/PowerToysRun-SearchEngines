@@ -7,6 +7,13 @@ A PowerToys Run Plugin that allows you to perform a search using various search-
 
 ## Usage
 
+> ?? PowerToys Run Plugins GitHub
+
+1. Open PowerToys Run (<kbd>Alt</kbd> + <kbd>Space</kbd>)
+2. Use the `ActionKeyword` (`??`) followed by the search query
+3. Select the desired search-engine from the list of suggestions
+4. Press <kbd>Enter</kbd> to open the search results using the default browser
+
 ## Installation
 
 1. Close PowerToys
