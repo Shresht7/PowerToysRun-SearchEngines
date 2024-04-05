@@ -101,7 +101,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
 
                 // Determine if the query starts with a search engine
-                if (SearchEngine.Shortcut.Contains(FirstSearch, StringComparison.OrdinalIgnoreCase))
+                if (StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut).Success)
                 {
                     // Remove the search engine shortcut from the search query and encode it
                     searchQuery = SecondToEndSearch;
