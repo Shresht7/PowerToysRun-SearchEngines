@@ -4,7 +4,7 @@
 .DESCRIPTION
     This script builds and packages the SearchEngines plugin. It also
     copies the build to the PowerToys Run Plugins directory.
-    i.e. `%LOCALAPPDATA%\Microsoft\PowerToys\Run\Plugins`
+    i.e. `%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins`
 .EXAMPLE
     .\Build.ps1
     Builds the SearchEngines plugin using the defaults
@@ -27,6 +27,7 @@ param(
 $ProjectName = "SearchEngines" # Project Name
 $ProjectFullName = "Community.PowerToys.Run.Plugin.$ProjectName" # Project FullName
 $ProjectBinFolder = "$PSScriptRoot\$ProjectFullName\bin" # Project Bin Folder
+$PowerToysRunPluginsDirectory = "$env:LOCALAPPDATA\Microsoft\PowerToys\PowerToys Run\Plugins" # PowerToys Run Plugins Directory
 $Version = "1.0.0" # Plugin Version Number
 
 # Stop running PowerToys process
@@ -40,8 +41,14 @@ if (Test-Path -Path $ProjectBinFolder) {
 # Build the project
 dotnet build "$PSScriptRoot\$ProjectFullName.sln" -c $Configuration /p:Platform=$Platform
 
-# Package the project
+# Prepare the build for packaging
 Remove-Item -Path "$ProjectBinFolder\*" -Recurse -Include *.xml, *.pdb, PowerToys.*, Wox.*
-Rename-Item -Path "$ProjectBinFolder\$Platform\Release" -NewName $ProjectName    
+Rename-Item -Path "$ProjectBinFolder\$Platform\Release" -NewName $ProjectName
+
+# Copy the build to the PowerToys Run Plugins directory
+Remove-Item -Path "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force -ErrorAction SilentlyContinue
+Copy-Item -Path "$ProjectBinFolder\$Platform\$ProjectName" -Destination "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force
+
+# Package the project
 Compress-Archive -Path "$ProjectBinFolder\$Platform\$ProjectName" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
 
