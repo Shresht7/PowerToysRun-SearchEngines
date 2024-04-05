@@ -20,7 +20,11 @@ param(
 
     # The configuration to build the project for. Must be one of: Debug, Release
     [ValidateSet("Debug", "Release")]
-    [string] $Configuration = "Release"
+    [string] $Configuration = "Release",
+
+    # The path to the PowerToys executable
+    [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
+    [string] $PowerToysPath = "C:\Program Files\PowerToys\PowerToys.exe"
 )
 
 # Constants
@@ -52,3 +56,5 @@ Copy-Item -Path "$ProjectBinFolder\$Platform\$ProjectName" -Destination "$PowerT
 # Package the project
 Compress-Archive -Path "$ProjectBinFolder\$Platform\$ProjectName" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
 
+# Restart PowerToys
+Start-Process -FilePath $PowerToysPath
