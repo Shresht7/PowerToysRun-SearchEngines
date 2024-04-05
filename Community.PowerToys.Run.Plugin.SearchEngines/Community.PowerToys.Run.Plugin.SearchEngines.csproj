@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Platforms>x64</Platforms>
+    <Platforms>x64;ARM64</Platforms>
     <PlatformTarget>$(Platform)</PlatformTarget>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
