@@ -66,6 +66,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             new SearchEngine { Name = "Bing", Url = "https://www.bing.com/search?q=%s", Shortcut = "bing" },
             new SearchEngine { Name = "GitHub", Url = "https://github.com/search?q=%s&ref=opensearch", Shortcut = "github" },
             new SearchEngine { Name = "Mozilla Developer Network", Url = "https://developer.mozilla.org/en-US/search?q=%s", Shortcut = "mdn" },
+            new SearchEngine { Name = "GitHub Docs", Url = "https://docs.github.com/en/search?query=%s", Shortcut = "ghdocs" },
         ];
 
         /// <summary>
@@ -100,16 +101,19 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     continue; // Skip this search engine if the URL is invalid
                 }
 
-                // Determine if the query starts with a search engine
-                if (StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut).Success)
+                // Perform a fuzzy search to determine if the query starts with a search engine shortcut
+                MatchResult matchResults = StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut);
+
+                // If the match was successful...
+                if (matchResults.Success)
                 {
-                    // Remove the search engine shortcut from the search query and encode it
+                    // ... remove the search engine shortcut from the search query and encode it
                     searchQuery = SecondToEndSearch;
                     encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery);
                 }
                 else
                 {
-                    // Skip this search engine if the query does not start with the search engine shortcut
+                    // ...otherwise, skip this search engine
                     continue;
                 }
 
@@ -119,6 +123,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     Title = string.IsNullOrEmpty(query.Search) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
                     IcoPath = IconPath,
+                    Score = matchResults.Score,
                     Action = e =>
                     {
                         // Replace the search query in the URL
