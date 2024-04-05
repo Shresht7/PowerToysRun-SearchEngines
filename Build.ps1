@@ -35,25 +35,41 @@ $PowerToysRunPluginsDirectory = "$env:LOCALAPPDATA\Microsoft\PowerToys\PowerToys
 $Version = "1.0.0" # Plugin Version Number
 
 # Stop running PowerToys process
+Write-Host "Stopping PowerToys process..." -NoNewline
 Stop-Process -Name "PowerToys" -Force -ErrorAction SilentlyContinue
+Write-Host "✅"
 
 # Clean the bin folder
+Write-Host "Cleaning the bin folder..." -NoNewline
 if (Test-Path -Path $ProjectBinFolder) {
     Remove-Item -Path "$ProjectBinFolder\*" -Recurse -Force
 }
+Write-Host "✅"
 
 # Build the project
+Write-Host "`nBuilding the project..."
 dotnet build "$PSScriptRoot\$ProjectFullName.sln" -c $Configuration /p:Platform=$Platform
+Write-Host " "
 
 # Prepare the build for packaging
+Write-Host "Preparing the build for packaging..." -NoNewline
 Remove-Item -Path "$ProjectBinFolder\*" -Recurse -Include *.xml, *.pdb, PowerToys.*, Wox.*
+Write-Host "✅"
 
 # Copy the build to the PowerToys Run Plugins directory
+Write-Host "Copying the build to the PowerToys Run Plugins directory..." -NoNewline
 Remove-Item -Path "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force -ErrorAction SilentlyContinue
 Copy-Item -Path "$ProjectBinFolder\$Platform\Release\net8.0-windows" -Destination "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force
+Write-Host "✅"
 
 # Package the project
+Write-Host "Packaging the project..." -NoNewline
 Compress-Archive -Path "$ProjectBinFolder\$Platform\Release\net8.0-windows" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
+Write-Host "✅"
 
 # Restart PowerToys
+Write-Host "Restarting PowerToys..." -NoNewline
 Start-Process -FilePath $PowerToysPath
+Write-Host "✅"
+
+Write-Host "`n📦 Build Completed Successfully ✅`n"
