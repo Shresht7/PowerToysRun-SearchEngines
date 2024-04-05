@@ -1,5 +1,5 @@
 $ProjectName = "SearchEngines" # Project Name
-$ProjectFullname = "Community.PowerToys.Run.Plugin.$ProjectName" # Project FullName
+$ProjectFullName = "Community.PowerToys.Run.Plugin.$ProjectName" # Project FullName
 $Version = "1.0.0" # Plugin Version Number
 
 # Supported Platforms
