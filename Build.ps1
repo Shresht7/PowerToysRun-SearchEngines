@@ -25,6 +25,9 @@ param(
     # The target framework to build the project for.
     [string] $TargetFramework = "net8.0-windows",
 
+    # The output directory for the build artifacts
+    [string] $OutDir = "$PSScriptRoot\Dist",
+
     # The path to the PowerToys executable
     [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
     [string] $PowerToysPath = "C:\Program Files\PowerToys\PowerToys.exe"
@@ -67,7 +70,7 @@ Write-Host "✅"
 
 # Package the project
 Write-Host "Packaging the project..." -NoNewline
-Compress-Archive -Path "$ProjectBinFolder\$Platform\$Configuration\$TargetFramework" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
+Compress-Archive -Path "$ProjectBinFolder\$Platform\$Configuration\$TargetFramework" -DestinationPath "$OutDir\$ProjectName-v$Version-$Platform.zip" -Force
 Write-Host "✅"
 
 # Restart PowerToys
