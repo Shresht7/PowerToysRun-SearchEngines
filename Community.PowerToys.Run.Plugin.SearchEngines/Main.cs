@@ -85,6 +85,13 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
             {
+                // Ensure that engine.URL is not null
+                if (string.IsNullOrEmpty(SearchEngine.Url))
+                {
+                    Log.Error($"Plugin: {Name}\nInvalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}", GetType());
+                    continue; // Skip this search engine if the URL is invalid
+                }
+
                 results.Add(new Result
                 {
                     Title = string.IsNullOrEmpty(query.Search) ? SearchEngine.Name : query.Search,
@@ -92,14 +99,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     IcoPath = IconPath,
                     Action = e =>
                     {
-                        // Ensure that engine.URL is not null
-                        if (string.IsNullOrEmpty(SearchEngine.Url))
-                        {
-                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}", GetType());
-                            Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}");
-                            return false;
-                        }
-
                         // Replace the search query in the URL
                         string url = SearchEngine.Url.Replace("%s", encodedSearchQuery);
 
