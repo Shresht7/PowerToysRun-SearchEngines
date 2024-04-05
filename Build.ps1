@@ -8,6 +8,9 @@ $Platforms = @(
     # , "ARM64"
 )
 
+# Stop running PowerToys process
+Stop-Process -Name "PowerToys" -Force -ErrorAction SilentlyContinue
+
 # Build the project for each platform
 foreach ($Platform in $Platforms) {
 
