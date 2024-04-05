@@ -73,11 +73,20 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <returns>A filtered list of results. Can be empty if nothing is found.</returns>
         public List<Result> Query(Query query)
         {
+            // Initialize the list of results
+            List<Result> results = [];
+
+            // If the query is empty, return an empty list of results
+            if (string.IsNullOrWhiteSpace(query.Search))
+            {
+                return results;
+            }
+
             // Encode the search query to be used in the URL
             string encodedSearchQuery = System.Net.WebUtility.UrlEncode(query.Search);
 
             // Show a result for each search engine
-            return SearchEngines
+            results = SearchEngines
                 .Select(engine => new Result
                 {
                     Title = query.Search,
@@ -109,6 +118,9 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     }
                 })
                 .ToList();
+
+            // Return the list of results
+            return results;
         }
 
         #endregion
