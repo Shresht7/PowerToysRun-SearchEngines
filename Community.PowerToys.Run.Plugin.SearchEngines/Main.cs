@@ -1,4 +1,4 @@
-// Library
+﻿// Library
 using ManagedCommon;
 using Wox.Infrastructure;
 using Wox.Plugin;
@@ -73,6 +73,9 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <returns>A filtered list of results. Can be empty if nothing is found.</returns>
         public List<Result> Query(Query query)
         {
+            // Encode the search query to be used in the URL
+            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(query.Search);
+
             // Show a result for each search engine
             return SearchEngines
                 .Select(engine => new Result
@@ -82,8 +85,25 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     IcoPath = IconPath,
                     Action = e =>
                     {
+                        // Ensure that engine.URL is not null
+                        if (string.IsNullOrWhiteSpace(engine.Url))
+                        {
+                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}", typeof(SearchEngine));
+                            return false;
+                        }
+
+                        // Replace the search query in the URL
+                        string url = engine.Url.Replace("%s", encodedSearchQuery);
+
+                        // Ensure that search URL is valid
+                        if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
+                        {
+                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}", typeof(SearchEngine));
+                            return false;
+                        }
+
                         // Open the search engine in the default browser
-                        OpenInBrowser(engine.Url + query.Search);
+                        OpenInBrowser(url);
                         return true;
                     }
                 })
