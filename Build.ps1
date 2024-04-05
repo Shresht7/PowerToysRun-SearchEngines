@@ -22,6 +22,9 @@ param(
     [ValidateSet("Debug", "Release")]
     [string] $Configuration = "Release",
 
+    # The target framework to build the project for.
+    [string] $TargetFramework = "net8.0-windows",
+
     # The path to the PowerToys executable
     [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
     [string] $PowerToysPath = "C:\Program Files\PowerToys\PowerToys.exe"
@@ -59,12 +62,12 @@ Write-Host "✅"
 # Copy the build to the PowerToys Run Plugins directory
 Write-Host "Copying the build to the PowerToys Run Plugins directory..." -NoNewline
 Remove-Item -Path "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force -ErrorAction SilentlyContinue
-Copy-Item -Path "$ProjectBinFolder\$Platform\Release\net8.0-windows" -Destination "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force
+Copy-Item -Path "$ProjectBinFolder\$Platform\$Configuration\$TargetFramework" -Destination "$PowerToysRunPluginsDirectory\$ProjectName" -Recurse -Force
 Write-Host "✅"
 
 # Package the project
 Write-Host "Packaging the project..." -NoNewline
-Compress-Archive -Path "$ProjectBinFolder\$Platform\Release\net8.0-windows" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
+Compress-Archive -Path "$ProjectBinFolder\$Platform\$Configuration\$TargetFramework" -DestinationPath "$PSScriptRoot\Dist\$ProjectName-$Version-$Platform.zip" -Force
 Write-Host "✅"
 
 # Restart PowerToys
