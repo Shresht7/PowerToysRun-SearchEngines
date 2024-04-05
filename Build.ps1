@@ -38,7 +38,7 @@ $ProjectName = "SearchEngines" # Project Name
 $ProjectFullName = "Community.PowerToys.Run.Plugin.$ProjectName" # Project FullName
 $ProjectBinFolder = "$PSScriptRoot\$ProjectFullName\bin" # Project Bin Folder
 $PowerToysRunPluginsDirectory = "$env:LOCALAPPDATA\Microsoft\PowerToys\PowerToys Run\Plugins" # PowerToys Run Plugins Directory
-$Version = "1.0.0" # Plugin Version Number
+$Version = "0.1.0" # Plugin Version Number
 
 # Stop running PowerToys process
 Write-Host "Stopping PowerToys process..." -NoNewline
