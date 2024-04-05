@@ -73,37 +73,35 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <returns>A filtered list of results. Can be empty if nothing is found.</returns>
         public List<Result> Query(Query query)
         {
+            // Ensure that the query is not null
+            ArgumentNullException.ThrowIfNull(query);
+
             // Initialize the list of results
             List<Result> results = [];
-
-            // If the query is empty, return an empty list of results
-            if (string.IsNullOrWhiteSpace(query.Search))
-            {
-                return results;
-            }
 
             // Encode the search query to be used in the URL
             string encodedSearchQuery = System.Net.WebUtility.UrlEncode(query.Search);
 
             // Show a result for each search engine
-            results = SearchEngines
-                .Select(engine => new Result
+            foreach (var SearchEngine in SearchEngines)
+            {
+                results.Add(new Result
                 {
-                    Title = query.Search,
-                    SubTitle = $"Search {engine.Name}",
+                    Title = string.IsNullOrEmpty(query.Search) ? SearchEngine.Name : query.Search,
+                    SubTitle = $"Search {SearchEngine.Name}",
                     IcoPath = IconPath,
                     Action = e =>
                     {
                         // Ensure that engine.URL is not null
-                        if (string.IsNullOrWhiteSpace(engine.Url))
+                        if (string.IsNullOrWhiteSpace(SearchEngine.Url))
                         {
-                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {engine.Name}: {engine.Url}", GetType());
-                            Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL for search engine {engine.Name}: {engine.Url}");
+                            Log.Error($"Plugin: {Name}\nInvalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}", GetType());
+                            Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL for search engine {SearchEngine.Name}: {SearchEngine.Url}");
                             return false;
                         }
 
                         // Replace the search query in the URL
-                        string url = engine.Url.Replace("%s", encodedSearchQuery);
+                        string url = SearchEngine.Url.Replace("%s", encodedSearchQuery);
 
                         // Ensure that search URL is valid
                         if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
@@ -116,8 +114,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                         // Open the search engine in the default browser
                         return OpenInBrowser(url);
                     }
-                })
-                .ToList();
+                });
+            }
 
             // Return the list of results
             return results;
