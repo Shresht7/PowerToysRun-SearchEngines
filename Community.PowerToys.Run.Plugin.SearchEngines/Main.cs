@@ -81,9 +81,15 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Initialize the list of results
             List<Result> results = [];
 
-            // Encode the search query to be used in the URL
+            // string FirstSearch = query.FirstSearch;
+            // string SecondToEndSearch = query.SecondToEndSearch;
+            // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
+
+            // Parse the search query
+            string FirstSearch = query.Terms[0];
+            string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
             string searchQuery = query.Search; // We create a new variable so that we can modify it later to remove the search engine shortcut
-            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery);
+            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery); // Encode the search query to be used in the URL
 
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
@@ -93,12 +99,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 {
                     continue; // Skip this search engine if the URL is invalid
                 }
-
-                // string FirstSearch = query.FirstSearch;
-                // string SecondToEndSearch = query.SecondToEndSearch;
-                // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
-                string FirstSearch = query.Terms[0];
-                string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
 
                 // Determine if the query starts with a search engine
                 if (StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut).Success)
