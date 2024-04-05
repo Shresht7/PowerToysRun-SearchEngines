@@ -5,7 +5,7 @@
     This script copies the project references from the PowerToys installation to the current project.
 .EXAMPLE
     . .\Get-ProjectReferences.ps1
-    Invoke the script to retrieve the projet references from the PowerToys installation.
+    Invoke the script to retrieve the project references from the PowerToys installation.
 .EXAMPLE
     . .\Get-ProjectReferences.ps1 -WhatIf
     Perform a dry-run.
