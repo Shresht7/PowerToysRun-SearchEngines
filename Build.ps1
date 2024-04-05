@@ -14,6 +14,13 @@
 #>
 [CmdletBinding()]
 param(
+    # The name of the project
+    [string] $ProjectName = "SearchEngines",
+
+    # The version number of the plugin
+    [ValidatePattern("^\d+\.\d+\.\d+$")]
+    [string] $Version = "0.1.0",
+
     # The platform to build the project for. Must be one of: x64, ARM64
     [ValidateSet("x64", "ARM64")]
     [string] $Platform = "x64",
@@ -34,11 +41,9 @@ param(
 )
 
 # Constants
-$ProjectName = "SearchEngines" # Project Name
 $ProjectFullName = "Community.PowerToys.Run.Plugin.$ProjectName" # Project FullName
 $ProjectBinFolder = "$PSScriptRoot\$ProjectFullName\bin" # Project Bin Folder
 $PowerToysRunPluginsDirectory = "$env:LOCALAPPDATA\Microsoft\PowerToys\PowerToys Run\Plugins" # PowerToys Run Plugins Directory
-$Version = "0.1.0" # Plugin Version Number
 
 # Stop running PowerToys process
 Write-Host "Stopping PowerToys process..." -NoNewline
