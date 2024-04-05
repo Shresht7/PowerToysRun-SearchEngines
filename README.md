@@ -1,6 +1,6 @@
 # SearchEngines
 
-A PowerToys Run Plugin that allows you to perform a search using various search-engines.
+A PowerToys Run Plugin that allows you to perform a search using search-engines.
 
 <!-- TODO: Add Screenshot -->
 ![Demonstration](./screenshot.png)
