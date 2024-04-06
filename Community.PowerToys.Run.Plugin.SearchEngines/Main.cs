@@ -67,7 +67,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <summary>
         /// The collection of Search Engines
         /// </summary>
-        private readonly List<SearchEngine> SearchEngines = SearchEngineCollection.SearchEngines;
+        private List<SearchEngine> SearchEngines = SearchEngineCollection.PredefinedSearchEngines;
 
         /// <summary>
         /// Returns a filtered list of results based on the given query
@@ -164,10 +164,14 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         {
             // Save the plugin initialization context for the future
             Context = context ?? throw new ArgumentNullException(nameof(context));
+
             // Subscribe to the OnThemeChanged event
             context.API.ThemeChanged += OnThemeChanged;
             // Update the icon path based on the current theme
             UpdateIconPath(context.API.GetCurrentTheme());
+
+            // Load the Search Engines from the Configuration File
+            SearchEngines = SearchEngineCollection.Load();
         }
 
         /// <summary>
