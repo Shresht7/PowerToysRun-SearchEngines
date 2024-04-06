@@ -1,0 +1,87 @@
+[
+	{
+		"name": "Bing",
+		"shortcut": "bing",
+		"url": "https://bing.com/search?q=%s"
+	},
+	{
+		"name": "Google",
+		"shortcut": "google",
+		"url": "https://google.com/search?q=%s"
+	},
+	{
+		"name": "DuckDuckGo",
+		"shortcut": "duckduckgo",
+		"url": "https://duckduckgo.com/?q=%s"
+	},
+	{
+		"name": "GitHub",
+		"shortcut": "github",
+		"url": "https://github.com/search?q=%s&ref=opensearch"
+	},
+	{
+		"name": "YouTube",
+		"shortcut": "youtube",
+		"url": "https://www.youtube.com/results?search_query=%s&page={startPage?}&utm_source=opensearch"
+	},
+	{
+		"name": "Pexels",
+		"shortcut": "pexels",
+		"url": "https://www.pexels.com/search/%s/"
+	},
+	{
+		"name": "NPM",
+		"shortcut": "npm",
+		"url": "https://www.npmjs.com/search?q=%s"
+	},
+	{
+		"name": "Google Drive",
+		"shortcut": "gdrive",
+		"url": "https://drive.google.com/drive/search?q=%s"
+	},
+	{
+		"name": "GitHub Gist",
+		"shortcut": "gist",
+		"url": "https://gist.github.com/search?q=%s&ref=opensearch"
+	},
+	{
+		"name": "Wolfram Alpha",
+		"shortcut": "wolfram",
+		"url": "http://www.wolframalpha.com/input/?i=%s"
+	},
+	{
+		"name": "Google Maps",
+		"shortcut": "maps",
+		"url": "https://www.google.com/maps/search/%s?hl=en&source=opensearch"
+	},
+	{
+		"name": "Mozilla Developer Network",
+		"shortcut": "mdn",
+		"url": "https://developer.mozilla.org/en-US/search?q=%s"
+	},
+	{
+		"name": "Reddit",
+		"shortcut": "reddit",
+		"url": "https://www.reddit.com/search/?q=%s"
+	},
+	{
+		"name": "pkg.go.dev",
+		"shortcut": "pkg.go.dev",
+		"url": "https://pkg.go.dev/search?q=%s"
+	},
+	{
+		"name": "Pocket",
+		"shortcut": "pocket",
+		"url": "https://getpocket.com/saves/search?query=%s"
+	},
+	{
+		"name": "GitHub Docs",
+		"shortcut": "ghdocs",
+		"url": "https://docs.github.com/en/search?query=%s"
+	},
+	{
+		"name": "Wikipedia",
+		"shortcut": "wikipedia",
+		"url": "https://en.wikipedia.org/w/index.php?title=Special:Search&search=%s"
+	}
+]
