@@ -12,7 +12,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
     /// <summary>
     /// Main class for the Search Engines Plugin. Implements the <see cref="IPlugin"/> interface.
     /// </summary>
-    public class Main : IPlugin
+    public class Main : IPlugin, IDisposable
     {
 
         #region Metadata
@@ -59,6 +59,11 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// The Directory where the Plugin resides
         /// </summary>
         public static string PluginDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+
+        /// <summary>
+        /// Whether the Plugin has been disposed
+        /// </summary>
+        private bool _disposed;
 
         #endregion
 
@@ -181,6 +186,33 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         private void OnThemeChanged(Theme oldTheme, Theme newTheme)
         {
             UpdateIconPath(newTheme);
+        }
+
+        /// <summary>
+        /// Dispose the Plugin and release any resources
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose the Plugin and release any resources
+        /// </summary>
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called
+            if (!_disposed && disposing)
+            {
+                // Unsubscribe from the OnThemeChanged event
+                if (Context != null && Context.API != null)
+                {
+                    Context.API.ThemeChanged -= OnThemeChanged;
+                }
+                // Set the disposed flag to true
+                _disposed = true;
+            }
         }
 
         #endregion
