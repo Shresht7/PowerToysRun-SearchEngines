@@ -126,7 +126,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 results.Add(new Result
                 {
                     QueryTextDisplay = query.Search,
-                    Title = string.IsNullOrEmpty(query.Search) ? SearchEngine.Name : searchQuery,
+                    Title = string.IsNullOrEmpty(searchQuery) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
                     IcoPath = IconPath,
                     Score = matchResults.Score,
