@@ -12,6 +12,15 @@
 .EXAMPLE
     . .\Get-ProjectReferences.ps1 -Confirm
     Prompt for confirmation before copying the files.
+.EXAMPLE
+    . .\Get-ProjectReferences.ps1 -Path "C:\Program Files\PowerToys"
+    Specify the path to the PowerToys installation.
+.EXAMPLE
+    . .\Get-ProjectReferences.ps1 -Dest "C:\Projects\MyProject"
+    Specify the destination path to copy the files to.
+.EXAMPLE
+    . .\Get-ProjectReferences.ps1 -Symlink
+    Create symlinks instead of copying the files.
 #>
 
 [CmdletBinding(SupportsShouldProcess)]
@@ -22,10 +31,13 @@ param(
 
     # Destination path to copy the files to
     [Alias("Target")]
-    [string] $Dest = $PSScriptRoot
+    [string] $Dest = $PSScriptRoot,
+
+    # Whether to create symlinks instead of copying the files
+    [switch] $Symlink
 )
 
-# The list of items to copy
+# The list of library items
 $Items = @(
     "PowerToys.Common.UI.dll",
     "PowerToys.ManagedCommon.dll",
@@ -34,9 +46,21 @@ $Items = @(
     "Wox.Plugin.dll"
 )
 
-# Copy the items to the destination
 foreach ($Item in $Items) {
+
+    # Construct the source and destination paths
     $From = Join-Path -Path $Path -ChildPath $Item
     $To = Join-Path -Path $Dest -ChildPath $Item
-    Copy-Item -Path $From -Destination $To -Force
+
+    # Remove existing files
+    Remove-Item -Path $To -Force -ErrorAction SilentlyContinue
+
+    # If $Symlink switch was provided, create a symbolic links...
+    if ($Symlink) {
+        New-Item -ItemType SymbolicLink -Path $To -Target $From -Force
+    } else {
+        # ...otherwise, copy the files to the destination
+        Copy-Item -Path $From -Destination $To -Force
+    }
+
 }
