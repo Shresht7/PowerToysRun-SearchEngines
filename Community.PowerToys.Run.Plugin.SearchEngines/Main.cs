@@ -30,7 +30,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <summary>
         /// Description of the Plugin
         /// </summary>
-        public string Description => "Perform a search using various search engines";
+        public string Description => "Perform a search using search engines";
 
         /// <summary>
         /// Path to the Icon for the Plugin
