@@ -59,6 +59,13 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <returns>A list of <see cref="SearchEngine"/>s</returns>
         public static List<SearchEngine> Load()
         {
+            // Create the configuration directory if it does not exist
+            string? directory = Path.GetDirectoryName(FilePath);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
             // If the file does not exist, return the predefined search engines
             if (!File.Exists(FilePath))
             {
