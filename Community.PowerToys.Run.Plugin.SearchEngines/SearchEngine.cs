@@ -1,13 +1,18 @@
+// Library
+using System.IO;
+using System.Text.Json;
+using Wox.Plugin.Logger;
+
 namespace Community.PowerToys.Run.Plugin.SearchEngines
 {
     /// <summary>
-    /// Class to represent a Search Engine
+    /// Models a search engine
     /// </summary>
     public class SearchEngine
     {
 
         /// <summary>
-        /// Display Name of the Search Engine
+        /// Display name of the search engine
         /// </summary>
         public required string Name { get; set; }
 
@@ -24,14 +29,20 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
     }
 
     /// <summary>
-    /// The class to contain the collection of Search Engines
+    /// Represent a collection of search engines
     /// </summary>
     public static class SearchEngineCollection
     {
+
         /// <summary>
-        /// The Collection of Search Engines
+        /// The path to the json configuration file that holds information about the search engines
         /// </summary>
-        public static readonly List<SearchEngine> SearchEngines =
+        public static readonly string FilePath = Path.Combine(Main.PluginDirectory, "Configuration", "SearchEngines.json");
+
+        /// <summary>
+        /// A default collection of search engines
+        /// </summary>
+        public static readonly List<SearchEngine> PredefinedSearchEngines =
                 [
             new SearchEngine { Name = "Google", Url = "https://www.google.com/search?q=%s", Shortcut = "google" },
             new SearchEngine { Name = "Bing", Url = "https://www.bing.com/search?q=%s", Shortcut = "bing" },
@@ -41,5 +52,45 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             new SearchEngine { Name = "Wikipedia", Url = "https://en.wikipedia.org/w/index.php?title=Special:Search&search=%s", Shortcut = "wikipedia" },
             new SearchEngine { Name = "Wolfram Alpha", Url = "http://www.wolframalpha.com/input/?i=%s", Shortcut = "wolfram" },
         ];
+
+        /// <summary>
+        /// Load the search engines from the configuration file
+        /// </summary>
+        /// <returns>A list of <see cref="SearchEngine"/>s</returns>
+        public static List<SearchEngine> Load()
+        {
+            // If the file does not exist, return the predefined search engines
+            if (!File.Exists(FilePath))
+            {
+                return PredefinedSearchEngines;
+            }
+
+            try
+            {
+                // Read the file and parse the contents
+                string json = File.ReadAllText(FilePath);
+                if (!string.IsNullOrEmpty(json))
+                {
+                    return JsonSerializer.Deserialize<List<SearchEngine>>(json, jsonSerializerOptions) ?? [];
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Failed to load configuration file. {e.Message}", typeof(SearchEngineCollection));
+            }
+
+            // Return the predefined search engines if something went wrong
+            return PredefinedSearchEngines;
+        }
+
+        /// <summary>
+        /// JSON serializer options
+        /// </summary>
+        private static readonly JsonSerializerOptions jsonSerializerOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true,
+        };
+
     }
 }
