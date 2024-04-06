@@ -1,4 +1,6 @@
 ﻿// Library
+using System.IO;
+using System.Reflection;
 using ManagedCommon;
 using Wox.Infrastructure;
 using Wox.Plugin;
@@ -52,6 +54,11 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 _ => "Images\\icon.dark.png",
             };
         }
+
+        /// <summary>
+        /// The Directory where the Plugin resides
+        /// </summary>
+        public static string PluginDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
 
         #endregion
 
