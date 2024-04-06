@@ -63,6 +63,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             if (!File.Exists(FilePath))
             {
                 Log.Error($"The configuration file does not exist! {FilePath}", typeof(SearchEngineCollection));
+                Log.Info("Creating a new configuration file with the predefined search engines.", typeof(SearchEngineCollection));
+                File.WriteAllText(FilePath, JsonSerializer.Serialize(PredefinedSearchEngines, jsonSerializerOptions));
                 return PredefinedSearchEngines;
             }
 
