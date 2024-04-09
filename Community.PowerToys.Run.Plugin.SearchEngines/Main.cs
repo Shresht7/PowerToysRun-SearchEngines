@@ -107,10 +107,10 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 }
 
                 // Perform a fuzzy search to determine if the query starts with a search engine shortcut
-                MatchResult matchResults = StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut);
+                MatchResult result = StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut);
 
                 // If the match was successful...
-                if (matchResults.Success)
+                if (result.Success)
                 {
                     // ... remove the search engine shortcut from the search query and encode it
                     searchQuery = SecondToEndSearch;
@@ -129,7 +129,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     Title = string.IsNullOrEmpty(searchQuery) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
                     IcoPath = IconPath,
-                    Score = matchResults.Score,
+                    Score = result.Score,
                     Action = e =>
                     {
                         // Replace the search query in the URL
