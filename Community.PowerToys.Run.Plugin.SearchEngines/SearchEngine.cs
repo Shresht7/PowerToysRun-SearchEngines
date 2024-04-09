@@ -63,10 +63,12 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             string? directory = Path.GetDirectoryName(FilePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
+                Log.Error($"The configuration directory does not exist! {directory}", typeof(SearchEngineCollection));
+                Log.Info($"Creating the configuration directory: {directory}", typeof(SearchEngineCollection));
                 Directory.CreateDirectory(directory);
             }
 
-            // If the file does not exist, return the predefined search engines
+            // If the file does not exist, create it and return the predefined search engines
             if (!File.Exists(FilePath))
             {
                 Log.Error($"The configuration file does not exist! {FilePath}", typeof(SearchEngineCollection));
@@ -75,9 +77,9 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 return PredefinedSearchEngines;
             }
 
+            // Read the configuration file and parse the contents
             try
             {
-                // Read the file and parse the contents
                 string json = File.ReadAllText(FilePath);
                 if (!string.IsNullOrEmpty(json))
                 {
@@ -89,7 +91,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 Log.Error($"Failed to load configuration file. {e.Message}", typeof(SearchEngineCollection));
             }
 
-            // Return the predefined search engines if something went wrong
+            // Return the predefined search engines as a fallback
             return PredefinedSearchEngines;
         }
 
