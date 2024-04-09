@@ -22,9 +22,9 @@
 	},
 	"Log Warning Message": {
 		"scope": "csharp",
-		"prefix": "warning",
+		"prefix": "warn",
 		"body": [
-			"Log.Warning($\"$1\", ${2:GetType()});$0",
+			"Log.Warn($\"$1\", ${2:GetType()});$0",
 		],
 	},
 	"Log Exceptional Message": {
