@@ -1,4 +1,4 @@
-﻿// Library
+// Library
 using System.IO;
 using System.Reflection;
 using ManagedCommon;
@@ -128,7 +128,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     QueryTextDisplay = query.Search,
                     Title = string.IsNullOrEmpty(searchQuery) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = IconPath,
+                    IcoPath = SearchEngine.IconPath ?? IconPath,
                     Score = result.Score,
                     Action = e =>
                     {
