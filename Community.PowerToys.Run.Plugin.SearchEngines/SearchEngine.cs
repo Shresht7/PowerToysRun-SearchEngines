@@ -22,6 +22,11 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         public required string Shortcut { get; set; }
 
         /// <summary>
+        /// Path to the icon of the search engine
+        /// </summary>
+        public string? IconPath { get; set; }
+
+        /// <summary>
         /// Check if the search engine object is valid
         /// </summary>
         public bool IsValid()
