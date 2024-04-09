@@ -74,6 +74,22 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         }
 
         /// <summary>
+        /// Save the search engines configuration to disk
+        /// </summary>
+        public static void Save(List<SearchEngine> SearchEngines)
+        {
+            try
+            {
+                string json = JsonSerializer.Serialize(SearchEngines, jsonSerializerOptions);
+                File.WriteAllText(FilePath, json);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Failed to save configuration file. {e.Message}", typeof(SearchEngineCollection));
+            }
+        }
+
+        /// <summary>
         /// JSON serializer options
         /// </summary>
         private static readonly JsonSerializerOptions jsonSerializerOptions = new()
