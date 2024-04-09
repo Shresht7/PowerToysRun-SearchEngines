@@ -69,7 +69,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 Log.Error($"Failed to load configuration file. {e.Message}", typeof(SearchEngineCollection));
             }
 
-            // Return the predefined search engines as a fallback
+            // Use the predefined search engines as a fallback
             return PredefinedSearchEngines;
         }
 
@@ -97,6 +97,30 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             PropertyNameCaseInsensitive = true,
             WriteIndented = true,
         };
+
+        /// <summary>
+        /// Download the favicons for the search engines that do not already have one
+        /// </summary>
+        public static async void DownloadFavicons(List<SearchEngine> SearchEngines)
+        {
+            // If the Favicon folder does not exist, create it
+            string directory = Path.Combine(Main.PluginDirectory, "Images", "Favicon");
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // Download the favicons for the search engines that do not already have one
+            List<Task<bool>> tasks = SearchEngines
+                .Where(engine => !File.Exists(engine.IconPath))
+                .Select(engine => engine.DownloadFavicon(directory)).ToList();
+
+            // Wait for all the tasks to complete
+            await Task.WhenAll(tasks);
+
+            // Update the configuration file (with the IconPaths) if any of the tasks succeeded
+            if (tasks.Any(task => task.Result)) { Save(SearchEngines); }
+        }
 
     }
 

@@ -1,4 +1,4 @@
-// Library
+﻿// Library
 using System.IO;
 using System.Reflection;
 using ManagedCommon;
@@ -176,8 +176,11 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Update the icon path based on the current theme
             UpdateIconPath(context.API.GetCurrentTheme());
 
-            // Load the Search Engines from the Configuration File
+            // Load the Search Engines from the configuration file
             SearchEngines = SearchEngineCollection.Load();
+
+            // Download the favicons for the Search Engines that don't already have one
+            SearchEngineCollection.DownloadFavicons(SearchEngines);
         }
 
         /// <summary>
