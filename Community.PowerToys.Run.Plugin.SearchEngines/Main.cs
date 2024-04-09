@@ -100,10 +100,10 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
             {
-                // Ensure that engine.URL and engine.Shortcut is not null
-                if (string.IsNullOrEmpty(SearchEngine.Url) || string.IsNullOrEmpty(SearchEngine.Shortcut))
+                // Ensure that search engine is valid
+                if (!SearchEngine.IsValid())
                 {
-                    continue; // Skip this search engine if the URL is invalid
+                    continue; // Skip this search engine if invalid
                 }
 
                 // Perform a fuzzy search to determine if the query starts with a search engine shortcut

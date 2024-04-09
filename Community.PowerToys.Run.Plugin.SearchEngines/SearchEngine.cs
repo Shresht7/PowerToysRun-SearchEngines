@@ -26,6 +26,14 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// </summary>
         public required string Shortcut { get; set; }
 
+        /// <summary>
+        /// Check if the search engine object is valid
+        /// </summary>
+        public bool IsValid()
+        {
+            return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(Shortcut);
+        }
+
     }
 
     /// <summary>
