@@ -128,7 +128,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     QueryTextDisplay = query.Search,
                     Title = string.IsNullOrEmpty(searchQuery) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = IconPath,
+                    IcoPath = SearchEngine.IconPath ?? IconPath,
                     Score = result.Score,
                     Action = e =>
                     {
@@ -176,8 +176,11 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Update the icon path based on the current theme
             UpdateIconPath(context.API.GetCurrentTheme());
 
-            // Load the Search Engines from the Configuration File
+            // Load the Search Engines from the configuration file
             SearchEngines = SearchEngineCollection.Load();
+
+            // Download the favicons for the Search Engines that don't already have one
+            SearchEngineCollection.DownloadFavicons(SearchEngines);
         }
 
         /// <summary>
