@@ -1,4 +1,4 @@
-// Library
+﻿// Library
 using System.IO;
 using System.Reflection;
 using ManagedCommon;
@@ -84,14 +84,25 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Ensure that the query is not null
             ArgumentNullException.ThrowIfNull(query);
 
-            // Initialize the list of results
-            List<Result> results = [];
-
             // If the query is empty, show all of the search engines
             if (string.IsNullOrEmpty(query.Search))
             {
                 return GenerateResultsForEmptyQuery();
             }
+
+            // Generate the results based on the query
+            return GenerateResults(query);
+        }
+
+        /// <summary>
+        /// Generates a list of results based on the given query
+        /// </summary>
+        /// <param name="query">The input query provided by the user</param>
+        /// <returns>A list of <see cref="Result"/> objects.</returns>
+        private List<Result> GenerateResults(Query query)
+        {
+            // Initialize the list of results
+            List<Result> results = [];
 
             // Parse the query into its components
             (string FirstSearch, string SecondToEndSearch, string searchQuery, string encodedSearchQuery) = ParseQuery(query);
