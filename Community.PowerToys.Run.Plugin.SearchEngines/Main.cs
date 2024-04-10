@@ -1,4 +1,4 @@
-﻿// Library
+// Library
 using System.IO;
 using System.Reflection;
 using ManagedCommon;
@@ -168,7 +168,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     Title = $"{SearchEngine.Name}",
                     SubTitle = $"Search {SearchEngine.Name}",
                     IcoPath = SearchEngine.IconPath ?? IconPath,
-                    Score = 100,
                     Action = e =>
                     {
                         // Open the search engine in the default browser
