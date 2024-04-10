@@ -110,11 +110,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
             {
-                // Ensure that search engine is valid
-                if (!SearchEngine.IsValid())
-                {
-                    continue; // Skip this search engine if invalid
-                }
+                // Skip this search engine if it is not valid
+                if (!SearchEngine.IsValid()) { continue; }
 
                 // Perform a fuzzy search to determine if the query starts with a search engine shortcut
                 MatchResult result = StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut);
@@ -166,11 +163,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
             {
-                // Ensure that search engine is valid
-                if (!SearchEngine.IsValid())
-                {
-                    continue; // Skip this search engine if invalid
-                }
+                // Skip this search engine if it is not valid
+                if (!SearchEngine.IsValid()) { continue; }
 
                 // Generate Results for this Search Engine
                 results.Add(new Result
