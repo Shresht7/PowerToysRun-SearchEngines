@@ -133,15 +133,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     {
                         // Replace the search query in the URL
                         string url = SearchEngine.Url.Replace("%s", encodedSearchQuery);
-
-                        // Ensure that search URL is valid
-                        if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
-                        {
-                            Log.Error($"Plugin: {Name}\nInvalid URL: {url}", GetType());
-                            Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL: {url}");
-                            return false;
-                        }
-
                         // Open the search engine in the default browser
                         return OpenInBrowser(url);
                     }
@@ -287,6 +278,15 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <returns>Whether the operation was successful</returns>
         private bool OpenInBrowser(string url)
         {
+            // Ensure that search URL is valid
+            if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                Log.Error($"Plugin: {Name}\nInvalid URL: {url}", GetType());
+                Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL: {url}");
+                return false;
+            }
+
+            // Open the URL in the default browser
             if (!Helper.OpenCommandInShell(BrowserInfo.Path, BrowserInfo.ArgumentsPattern, url))
             {
                 Log.Error($"Plugin: {Name}\nCannot open {BrowserInfo.Path} with arguments {BrowserInfo.ArgumentsPattern} {url}", GetType());
