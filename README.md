@@ -51,6 +51,18 @@ The plugin can be configured by editing the `Configuration\SearchEngines.json` f
 ]
 ```
 
+> [!TIP]
+>
+> `Url` doesn't always have to be a search-engine. It can be any URL. The `%s` will be replaced with the search query. For example:
+>
+> ```json
+> {
+>   "Name": "Learn X in Y Minutes",
+>   "Url": "https://learnxinyminutes.com/docs/%s",
+>   "Shortcut": "lxym"
+> }  
+> ```
+
 ## 🔗 Related
 
 - [Microsoft PowerToys](https://github.com/Microsoft/PowerToys)
