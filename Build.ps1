@@ -75,7 +75,7 @@ Write-Host "✅"
 
 # Package the project
 Write-Host "Packaging the project..." -NoNewline
-Compress-Archive -Path "$ProjectBinFolder\$Platform\$Configuration\$TargetFramework" -DestinationPath "$OutDir\$ProjectName-v$Version-$Platform.zip" -Force
+Compress-Archive -Path "$ProjectBinFolder\$Platform\$Configuration\$TargetFramework" -DestinationPath "$OutDir\$ProjectName-$Version-$Platform.zip" -Force
 Write-Host "✅"
 
 # Restart PowerToys
