@@ -87,6 +87,38 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Initialize the list of results
             List<Result> results = [];
 
+            // If the query is empty, show the search engines
+            if (string.IsNullOrEmpty(query.Search))
+            {
+                // Show a result for each search engine
+                foreach (var SearchEngine in SearchEngines)
+                {
+                    // Ensure that search engine is valid
+                    if (!SearchEngine.IsValid())
+                    {
+                        continue; // Skip this search engine if invalid
+                    }
+
+                    // Generate Results for this Search Engine
+                    results.Add(new Result
+                    {
+                        QueryTextDisplay = $"{SearchEngine.Shortcut} ",
+                        Title = $"{SearchEngine.Name}",
+                        SubTitle = $"Search {SearchEngine.Name}",
+                        IcoPath = SearchEngine.IconPath ?? IconPath,
+                        Score = 100,
+                        Action = e =>
+                        {
+                            // Open the search engine in the default browser
+                            return OpenInBrowser(SearchEngine.Url);
+                        }
+                    });
+                }
+
+                // Return the list of results
+                return results;
+            }
+
             // string FirstSearch = query.FirstSearch;
             // string SecondToEndSearch = query.SecondToEndSearch;
             // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
