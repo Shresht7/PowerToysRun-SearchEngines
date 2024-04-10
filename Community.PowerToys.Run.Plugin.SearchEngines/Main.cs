@@ -95,6 +95,41 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         }
 
         /// <summary>
+        /// Generates a list of results for an empty query.
+        /// </summary>
+        /// <returns>A list of <see cref="Result"/> objects.</returns>
+        private List<Result> GenerateResultsForEmptyQuery()
+        {
+            // Initialize the list of results
+            List<Result> results = [];
+
+            // Show a result for each search engine
+            foreach (var SearchEngine in SearchEngines)
+            {
+                // Skip this search engine if it is not valid
+                if (!SearchEngine.IsValid()) { continue; }
+
+                // Generate Results for this Search Engine
+                results.Add(new Result
+                {
+                    QueryTextDisplay = $"{SearchEngine.Shortcut} ",
+                    Title = $"{SearchEngine.Name}",
+                    SubTitle = $"Search {SearchEngine.Name}",
+                    IcoPath = SearchEngine.IconPath ?? IconPath,
+                    Action = e =>
+                    {
+                        // Open the search engine in the default browser
+                        return OpenInBrowser(SearchEngine.Url);
+                    }
+                });
+            }
+
+            // Return the list of results
+            return results;
+        }
+
+
+        /// <summary>
         /// Generates a list of results based on the given query
         /// </summary>
         /// <param name="query">The input query provided by the user</param>
@@ -143,40 +178,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                         string url = SearchEngine.Url.Replace("%s", encodedSearchQuery);
                         // Open the search engine in the default browser
                         return OpenInBrowser(url);
-                    }
-                });
-            }
-
-            // Return the list of results
-            return results;
-        }
-
-        /// <summary>
-        /// Generates a list of results for an empty query.
-        /// </summary>
-        /// <returns>A list of <see cref="Result"/> objects.</returns>
-        private List<Result> GenerateResultsForEmptyQuery()
-        {
-            // Initialize the list of results
-            List<Result> results = [];
-
-            // Show a result for each search engine
-            foreach (var SearchEngine in SearchEngines)
-            {
-                // Skip this search engine if it is not valid
-                if (!SearchEngine.IsValid()) { continue; }
-
-                // Generate Results for this Search Engine
-                results.Add(new Result
-                {
-                    QueryTextDisplay = $"{SearchEngine.Shortcut} ",
-                    Title = $"{SearchEngine.Name}",
-                    SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = SearchEngine.IconPath ?? IconPath,
-                    Action = e =>
-                    {
-                        // Open the search engine in the default browser
-                        return OpenInBrowser(SearchEngine.Url);
                     }
                 });
             }
