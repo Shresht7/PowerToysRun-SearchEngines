@@ -84,59 +84,69 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             // Ensure that the query is not null
             ArgumentNullException.ThrowIfNull(query);
 
-            // Initialize the list of results
-            List<Result> results = [];
-
-            // If the query is empty, show the search engines
+            // If the query is empty, show all of the search engines
             if (string.IsNullOrEmpty(query.Search))
             {
-                // Show a result for each search engine
-                foreach (var SearchEngine in SearchEngines)
-                {
-                    // Ensure that search engine is valid
-                    if (!SearchEngine.IsValid())
-                    {
-                        continue; // Skip this search engine if invalid
-                    }
-
-                    // Generate Results for this Search Engine
-                    results.Add(new Result
-                    {
-                        QueryTextDisplay = $"{SearchEngine.Shortcut} ",
-                        Title = $"{SearchEngine.Name}",
-                        SubTitle = $"Search {SearchEngine.Name}",
-                        IcoPath = SearchEngine.IconPath ?? IconPath,
-                        Score = 100,
-                        Action = e =>
-                        {
-                            // Open the search engine in the default browser
-                            return OpenInBrowser(SearchEngine.Url);
-                        }
-                    });
-                }
-
-                // Return the list of results
-                return results;
+                return GenerateResultsForEmptyQuery();
             }
 
-            // string FirstSearch = query.FirstSearch;
-            // string SecondToEndSearch = query.SecondToEndSearch;
-            // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
+            // Generate the results based on the query
+            return GenerateResults(query);
+        }
 
-            // Parse the search query
-            string FirstSearch = query.Terms[0];
-            string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
-            string searchQuery = query.Search; // We create a new variable so that we can modify it later to remove the search engine shortcut
-            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery); // Encode the search query to be used in the URL
+        /// <summary>
+        /// Generates a list of results for an empty query.
+        /// </summary>
+        /// <returns>A list of <see cref="Result"/> objects.</returns>
+        private List<Result> GenerateResultsForEmptyQuery()
+        {
+            // Initialize the list of results
+            List<Result> results = [];
 
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
             {
-                // Ensure that search engine is valid
-                if (!SearchEngine.IsValid())
+                // Skip this search engine if it is not valid
+                if (!SearchEngine.IsValid()) { continue; }
+
+                // Generate Results for this Search Engine
+                results.Add(new Result
                 {
-                    continue; // Skip this search engine if invalid
-                }
+                    QueryTextDisplay = $"{SearchEngine.Shortcut} ",
+                    Title = $"{SearchEngine.Name}",
+                    SubTitle = $"Search {SearchEngine.Name}",
+                    IcoPath = SearchEngine.IconPath ?? IconPath,
+                    Action = e =>
+                    {
+                        // Open the search engine in the default browser
+                        return OpenInBrowser(SearchEngine.Url);
+                    }
+                });
+            }
+
+            // Return the list of results
+            return results;
+        }
+
+
+        /// <summary>
+        /// Generates a list of results based on the given query
+        /// </summary>
+        /// <param name="query">The input query provided by the user</param>
+        /// <returns>A list of <see cref="Result"/> objects.</returns>
+        private List<Result> GenerateResults(Query query)
+        {
+            // Initialize the list of results
+            List<Result> results = [];
+
+            // Parse the query into its components
+            (string FirstSearch, string SecondToEndSearch, string searchQuery, string encodedSearchQuery) = ParseQuery(query);
+
+            // Show a result for each search engine
+            foreach (var SearchEngine in SearchEngines)
+            {
+                // Skip this search engine if it is not valid
+                if (!SearchEngine.IsValid()) { continue; }
 
                 // Perform a fuzzy search to determine if the query starts with a search engine shortcut
                 MatchResult result = StringMatcher.FuzzySearch(FirstSearch, SearchEngine.Shortcut);
@@ -166,15 +176,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     {
                         // Replace the search query in the URL
                         string url = SearchEngine.Url.Replace("%s", encodedSearchQuery);
-
-                        // Ensure that search URL is valid
-                        if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
-                        {
-                            Log.Error($"Plugin: {Name}\nInvalid URL: {url}", GetType());
-                            Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL: {url}");
-                            return false;
-                        }
-
                         // Open the search engine in the default browser
                         return OpenInBrowser(url);
                     }
@@ -256,12 +257,41 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         #region Helper Methods
 
         /// <summary>
+        /// Parse the given query into its components
+        /// </summary>
+        /// <param name="query">The input query provided by the user</param>
+        /// <returns>A tuple containing the parsed components of the query</returns>
+        private static (string, string, string, string) ParseQuery(Query query)
+        {
+            // string FirstSearch = query.FirstSearch;
+            // string SecondToEndSearch = query.SecondToEndSearch;
+            // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
+
+            // Parse the search query
+            string FirstSearch = query.Terms[0];
+            string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
+            string searchQuery = query.Search; // We create a new variable so that we can modify it later to remove the search engine shortcut
+            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery); // Encode the search query to be used in the URL
+
+            return (FirstSearch, SecondToEndSearch, searchQuery, encodedSearchQuery);
+        }
+
+        /// <summary>
         /// Open the given URL in the default browser
         /// </summary>
         /// <param name="url">The URL to open</param>
         /// <returns>Whether the operation was successful</returns>
         private bool OpenInBrowser(string url)
         {
+            // Ensure that search URL is valid
+            if (string.IsNullOrEmpty(url) && !Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                Log.Error($"Plugin: {Name}\nInvalid URL: {url}", GetType());
+                Context?.API.ShowMsg($"Plugin: {Name}", $"Invalid URL: {url}");
+                return false;
+            }
+
+            // Open the URL in the default browser
             if (!Helper.OpenCommandInShell(BrowserInfo.Path, BrowserInfo.ArgumentsPattern, url))
             {
                 Log.Error($"Plugin: {Name}\nCannot open {BrowserInfo.Path} with arguments {BrowserInfo.ArgumentsPattern} {url}", GetType());
