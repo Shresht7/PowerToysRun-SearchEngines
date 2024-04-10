@@ -45,7 +45,7 @@ The plugin can be configured by editing the `Configuration\SearchEngines.json` f
     },
     {
         "Name": "Wolfram Alpha",
-        "Url": "http://www.wolframalpha.com/input/?i=%s",
+        "Url": "https://www.wolframalpha.com/input/?i=%s",
         "Shortcut": "wolfram",
     }
 ]
