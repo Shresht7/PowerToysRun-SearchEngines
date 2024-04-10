@@ -93,15 +93,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 return GenerateResultsForEmptyQuery();
             }
 
-            // string FirstSearch = query.FirstSearch;
-            // string SecondToEndSearch = query.SecondToEndSearch;
-            // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
-
-            // Parse the search query
-            string FirstSearch = query.Terms[0];
-            string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
-            string searchQuery = query.Search; // We create a new variable so that we can modify it later to remove the search engine shortcut
-            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery); // Encode the search query to be used in the URL
+            // Parse the query into its components
+            (string FirstSearch, string SecondToEndSearch, string searchQuery, string encodedSearchQuery) = ParseQuery(query);
 
             // Show a result for each search engine
             foreach (var SearchEngine in SearchEngines)
@@ -266,6 +259,26 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         #endregion
 
         #region Helper Methods
+
+        /// <summary>
+        /// Parse the given query into its components
+        /// </summary>
+        /// <param name="query">The input query provided by the user</param>
+        /// <returns>A tuple containing the parsed components of the query</returns>
+        private static (string, string, string, string) ParseQuery(Query query)
+        {
+            // string FirstSearch = query.FirstSearch;
+            // string SecondToEndSearch = query.SecondToEndSearch;
+            // query.FirstSearch and query.SecondToEndSearch do not behave as expected, so we use the following code instead
+
+            // Parse the search query
+            string FirstSearch = query.Terms[0];
+            string SecondToEndSearch = query.Search[FirstSearch.Length..].Trim();
+            string searchQuery = query.Search; // We create a new variable so that we can modify it later to remove the search engine shortcut
+            string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery); // Encode the search query to be used in the URL
+
+            return (FirstSearch, SecondToEndSearch, searchQuery, encodedSearchQuery);
+        }
 
         /// <summary>
         /// Open the given URL in the default browser
