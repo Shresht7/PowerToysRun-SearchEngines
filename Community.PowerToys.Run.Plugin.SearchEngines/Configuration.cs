@@ -15,7 +15,15 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <summary>
         /// The path to the json configuration file that holds information about the search engines
         /// </summary>
-        public static readonly string FilePath = Path.Combine(Main.PluginDirectory, "Configuration", "SearchEngines.json");
+        public static readonly string FilePath = Path.Combine(
+            Main.PluginDirectory,
+            "..", // Plugins
+            "..", // PowerToys Run
+            "Settings",
+            "Plugins",
+            "Community.PowerToys.Run.Plugin.SearchEngines",
+            "SearchEngines.json"
+        );
 
         /// <summary>
         /// A default collection of search engines
