@@ -7,9 +7,9 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
 {
 
     /// <summary>
-    /// Represent a collection of search engines
+    /// The class responsible for loading and saving the search engines configuration
     /// </summary>
-    public static class SearchEngineCollection
+    public static class Config
     {
 
         /// <summary>
@@ -49,16 +49,16 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             string? directory = Path.GetDirectoryName(FilePath);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
-                Log.Error($"The configuration directory does not exist! {directory}", typeof(SearchEngineCollection));
-                Log.Info($"Creating the configuration directory: {directory}", typeof(SearchEngineCollection));
+                Log.Error($"The configuration directory does not exist! {directory}", typeof(Config));
+                Log.Info($"Creating the configuration directory: {directory}", typeof(Config));
                 Directory.CreateDirectory(directory);
             }
 
             // If the file does not exist, create it and return the predefined search engines
             if (!File.Exists(FilePath))
             {
-                Log.Error($"The configuration file does not exist! {FilePath}", typeof(SearchEngineCollection));
-                Log.Info("Creating a new configuration file with the predefined search engines.", typeof(SearchEngineCollection));
+                Log.Error($"The configuration file does not exist! {FilePath}", typeof(Config));
+                Log.Info("Creating a new configuration file with the predefined search engines.", typeof(Config));
                 File.WriteAllText(FilePath, JsonSerializer.Serialize(PredefinedSearchEngines, jsonSerializerOptions));
                 return PredefinedSearchEngines;
             }
@@ -74,7 +74,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             }
             catch (Exception e)
             {
-                Log.Error($"Failed to load configuration file. {e.Message}", typeof(SearchEngineCollection));
+                Log.Error($"Failed to load configuration file. {e.Message}", typeof(Config));
             }
 
             // Use the predefined search engines as a fallback
@@ -93,7 +93,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             }
             catch (Exception e)
             {
-                Log.Error($"Failed to save configuration file. {e.Message}", typeof(SearchEngineCollection));
+                Log.Error($"Failed to save configuration file. {e.Message}", typeof(Config));
             }
         }
 

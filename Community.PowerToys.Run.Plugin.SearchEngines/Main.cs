@@ -72,7 +72,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// <summary>
         /// The collection of Search Engines
         /// </summary>
-        private List<SearchEngine> SearchEngines = SearchEngineCollection.PredefinedSearchEngines;
+        private List<SearchEngine> SearchEngines = Config.PredefinedSearchEngines;
 
         /// <summary>
         /// Returns a filtered list of results based on the given query
@@ -210,10 +210,10 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             UpdateIconPath(context.API.GetCurrentTheme());
 
             // Load the Search Engines from the configuration file
-            SearchEngines = SearchEngineCollection.Load();
+            SearchEngines = Config.Load();
 
             // Download the favicons for the Search Engines that don't already have one
-            SearchEngineCollection.DownloadFavicons(SearchEngines);
+            Config.DownloadFavicons(SearchEngines);
         }
 
         /// <summary>
