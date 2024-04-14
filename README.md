@@ -6,12 +6,21 @@ A PowerToys Run Plugin that allows you to perform a search using search-engines.
 
 ## 📖 Usage
 
-> ?! PowerToys Run Plugins GitHub
+> ?! GitHub PowerToys
 
 1. Open PowerToys Run (<kbd>Alt</kbd> + <kbd>Space</kbd>)
-2. Use the `ActionKeyword` (`?!`) followed by the search query
-3. Select the desired search-engine from the list of suggestions
+2. Use the `ActionKeyword` (`?!`) followed by the keyword and the search query (e.g. `?! yt PowerToys`)
+3. Select the desired search-engine from the list of suggestions. (The keyword allows you to filter the search-engines)
 4. Press <kbd>Enter</kbd> to open the search results using the default browser
+
+### 📃 Examples
+
+- `?! google Search Query`
+- `?! bing Search Query`
+- `?! mdn Search Query`
+- `?! wolfram Search Query`
+- `?! yt Search Query`
+- `?! gh Search Query`
 
 ## 📦 Installation
 
