@@ -71,10 +71,6 @@ The plugin can be configured by editing the `Configuration\SearchEngines.json` f
 > }  
 > ```
 
-## 🔗 Related
-
-- [Microsoft PowerToys](https://github.com/Microsoft/PowerToys)
-
 ---
 
 ## 📄 License
