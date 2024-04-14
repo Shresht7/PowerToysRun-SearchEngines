@@ -115,7 +115,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     QueryTextDisplay = $"{SearchEngine.Shortcut} ",
                     Title = $"{SearchEngine.Name}",
                     SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = SearchEngine.IconPath ?? IconPath,
+                    IcoPath = SearchEngine.GetIconPath() ?? IconPath,
                     Action = e =>
                     {
                         // Open the search engine in the default browser
@@ -170,7 +170,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     QueryTextDisplay = query.Search,
                     Title = string.IsNullOrEmpty(searchQuery) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = SearchEngine.IconPath ?? IconPath,
+                    IcoPath = SearchEngine.GetIconPath() ?? IconPath,
                     Score = result.Score,
                     Action = e =>
                     {

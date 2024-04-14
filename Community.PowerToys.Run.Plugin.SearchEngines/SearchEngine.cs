@@ -27,16 +27,26 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         public required string Shortcut { get; set; }
 
         /// <summary>
-        /// Path to the icon of the search engine
-        /// </summary>
-        public string? IconPath { get; set; }
-
-        /// <summary>
         /// Check if the search engine object is valid
         /// </summary>
         public bool IsValid()
         {
             return !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(Url) && !string.IsNullOrEmpty(Shortcut);
+        }
+
+        /// <summary>
+        /// Gets the path to the favicon file for the search engine
+        /// </summary>
+        /// <returns>The path to the favicon file</returns>
+        public string GetIconPath()
+        {
+            // Path to the favicon directory
+            string iconDirectory = Path.Combine(Main.PluginDirectory, "Images", "Favicon");
+            // Extract the domain from the URL. This will be used to name the favicon file locally.
+            // For example, the favicon for "https://www.google.com" will be saved as "google.png".
+            string domain = new Uri(Url).Host.Replace("www.", "");
+            // Path to the favicon file
+            return Path.Combine(iconDirectory, $"{domain}.png");
         }
 
         /// <summary>
@@ -46,20 +56,14 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
         /// A task representing the asynchronous operation.
         /// The task result is a boolean value indicating whether the favicon was successfully downloaded and saved.
         /// </returns>
-        public async Task<bool> DownloadFavicon(string directory)
+        public async Task<bool> DownloadFavicon()
         {
-            // Extract the domain from the URL. This will be used to name the favicon file locally.
-            // For example, the favicon for "https://www.google.com" will be saved as "google.png".
-            string domain = new Uri(Url).Host.Replace("www.", "");
-
             // Path to the favicon file
-            string path = Path.Combine(directory, $"{domain}.png");
-            string iconPath = Path.Combine("Images", "Favicon", $"{domain}.png");
+            string path = GetIconPath();
 
             // Check if the favicon already exists
             if (File.Exists(path))
             {
-                IconPath = iconPath;
                 return false; // We don't need to download the favicon again
             }
 
@@ -82,8 +86,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                 return false; // Failed to save the favicon
             }
 
-            // Set the IconPath to the local file path of the favicon
-            IconPath = iconPath;
             return true;
         }
 

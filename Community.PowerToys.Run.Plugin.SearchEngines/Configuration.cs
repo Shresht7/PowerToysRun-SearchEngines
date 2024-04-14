@@ -120,8 +120,8 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
 
             // Download the favicons for the search engines that do not already have one
             List<Task<bool>> tasks = SearchEngines
-                .Where(engine => !File.Exists(engine.IconPath))
-                .Select(engine => engine.DownloadFavicon(directory)).ToList();
+                .Where(engine => !File.Exists(engine.GetIconPath()))
+                .Select(engine => engine.DownloadFavicon()).ToList();
 
             // Wait for all the tasks to complete
             await Task.WhenAll(tasks);
