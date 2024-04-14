@@ -6,8 +6,5 @@
             ],
             "url": "./.vscode/plugin.schema.json"
         }
-    ],
-    "cSpell.ignorePaths": [
-        "SearchEngines.json",
     ]
 }
