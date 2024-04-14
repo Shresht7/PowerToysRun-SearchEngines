@@ -125,9 +125,6 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
 
             // Wait for all the tasks to complete
             await Task.WhenAll(tasks);
-
-            // Update the configuration file (with the IconPaths) if any of the tasks succeeded
-            if (tasks.Any(task => task.Result)) { Save(SearchEngines); }
         }
 
     }
