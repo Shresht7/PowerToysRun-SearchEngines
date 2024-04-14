@@ -2,12 +2,11 @@
 
 A PowerToys Run Plugin that allows you to perform a search using search-engines.
 
-<!-- TODO: Add Screenshot -->
 ![Demonstration](./screenshot.png)
 
 ## 📖 Usage
 
-> ?? PowerToys Run Plugins GitHub
+> ?! PowerToys Run Plugins GitHub
 
 1. Open PowerToys Run (<kbd>Alt</kbd> + <kbd>Space</kbd>)
 2. Use the `ActionKeyword` (`?!`) followed by the search query
