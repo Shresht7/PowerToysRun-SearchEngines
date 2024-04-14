@@ -115,7 +115,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     QueryTextDisplay = $"{SearchEngine.Shortcut} ",
                     Title = $"{SearchEngine.Name}",
                     SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = SearchEngine.GetIconPath() ?? IconPath,
+                    IcoPath = GetIconPath(SearchEngine),
                     Action = e =>
                     {
                         // Open the search engine in the default browser
@@ -170,7 +170,7 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
                     QueryTextDisplay = query.Search,
                     Title = string.IsNullOrEmpty(searchQuery) ? SearchEngine.Name : searchQuery,
                     SubTitle = $"Search {SearchEngine.Name}",
-                    IcoPath = SearchEngine.GetIconPath() ?? IconPath,
+                    IcoPath = GetIconPath(SearchEngine),
                     Score = result.Score,
                     Action = e =>
                     {
@@ -274,6 +274,21 @@ namespace Community.PowerToys.Run.Plugin.SearchEngines
             string encodedSearchQuery = System.Net.WebUtility.UrlEncode(searchQuery); // Encode the search query to be used in the URL
 
             return (FirstSearch, SecondToEndSearch, searchQuery, encodedSearchQuery);
+        }
+
+        /// <summary>
+        /// Gets the path to the favicon file for the search engine
+        /// </summary>
+        /// <param name="engine">The search engine</param>
+        /// <returns>The path to the favicon file</returns>
+        private string GetIconPath(SearchEngine engine)
+        {
+            string iconPath = engine.GetIconPath();
+            if (string.IsNullOrEmpty(iconPath) || !File.Exists(iconPath))
+            {
+                iconPath = IconPath ?? string.Empty;
+            }
+            return iconPath;
         }
 
         /// <summary>
