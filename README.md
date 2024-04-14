@@ -47,14 +47,14 @@ The plugin can be configured by editing the `Configuration\SearchEngines.json` f
       "shortcut": "bing"
     },
     {
-        "name": "Mozilla Developer Network",
-        "url": "https://developer.mozilla.org/en-US/search?q=%s",
-        "shortcut": "mdn",
+      "name": "Mozilla Developer Network",
+      "url": "https://developer.mozilla.org/en-US/search?q=%s",
+      "shortcut": "mdn",
     },
     {
-        "name": "Wolfram Alpha",
-        "url": "https://www.wolframalpha.com/input/?i=%s",
-        "shortcut": "wolfram",
+      "name": "Wolfram Alpha",
+      "url": "https://www.wolframalpha.com/input/?i=%s",
+      "shortcut": "wolfram",
     }
 ]
 ```
