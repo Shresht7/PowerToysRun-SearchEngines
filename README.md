@@ -37,37 +37,37 @@ The plugin can be configured by editing the `Configuration\SearchEngines.json` f
 ```json
 [
     {
-      "Name": "Google",
-      "Url": "https://www.google.com/search?q=%s",
-      "Shortcut": "google"
+      "name": "Google",
+      "url": "https://www.google.com/search?q=%s",
+      "shortcut": "google"
     },
     {
-      "Name": "Bing",
-      "Url": "https://www.bing.com/search?q=%s",
-      "Shortcut": "bing"
+      "name": "Bing",
+      "url": "https://www.bing.com/search?q=%s",
+      "shortcut": "bing"
     },
     {
-        "Name": "Mozilla Developer Network",
-        "Url": "https://developer.mozilla.org/en-US/search?q=%s",
-        "Shortcut": "mdn",
+        "name": "Mozilla Developer Network",
+        "url": "https://developer.mozilla.org/en-US/search?q=%s",
+        "shortcut": "mdn",
     },
     {
-        "Name": "Wolfram Alpha",
-        "Url": "https://www.wolframalpha.com/input/?i=%s",
-        "Shortcut": "wolfram",
+        "name": "Wolfram Alpha",
+        "url": "https://www.wolframalpha.com/input/?i=%s",
+        "shortcut": "wolfram",
     }
 ]
 ```
 
 > [!TIP]
 >
-> `Url` doesn't always have to be a search-engine. It can be any URL. The `%s` will be replaced with the search query. For example:
+> `url` doesn't always have to be a search-engine. It can be any URL. The `%s` will be replaced with the search query. For example:
 >
 > ```json
 > {
->   "Name": "Learn X in Y Minutes",
->   "Url": "https://learnxinyminutes.com/docs/%s",
->   "Shortcut": "lxym"
+>   "name": "Learn X in Y Minutes",
+>   "url": "https://learnxinyminutes.com/docs/%s",
+>   "shortcut": "lxym"
 > }  
 > ```
 
