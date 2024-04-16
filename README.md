@@ -32,7 +32,7 @@ A PowerToys Run Plugin that allows you to perform a search using search-engines.
 
 ## 🛠️ Configuration
 
-The plugin can be configured by editing the `Configuration\SearchEngines.json` file located in the plugin directory (`%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Plugins\SearchEngines\`).
+The plugin can be configured by editing the `SearchEngines.json` file located in the plugin's settings directory (`%LOCALAPPDATA%\Microsoft\PowerToys\PowerToys Run\Settings\Plugins\Community.PowerToys.Run.Plugin.SearchEngines\`).
 
 ```json
 [
